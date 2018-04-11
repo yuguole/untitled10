@@ -25,7 +25,7 @@ SECRET_KEY = 'zbh%6qab5(hoc!n9q%3(ea1k52d&*7!-=u)mbmzb8y*p%jl9do'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yuguole.pythonanywhere.com']
 
 
 # Application definition
@@ -120,4 +120,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STAIC_ROOT = os.path.join(BASE_DIR,'str')
 STATIC_URL = '/static/'
+STAICFILES_DIRS=[
+    os.path.join(BASE_DIR,'static'),
+]
