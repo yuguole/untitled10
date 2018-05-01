@@ -9,6 +9,28 @@ class UserManager(models.Manager):
         user.password = password
         return user
 
+class AskManager(models.Manager):
+    def create(self,asktitle, askdetail):
+        ask=AskInfo()
+        #ask.ask_user=username
+        ask.ask_title=asktitle
+        ask.ask_details=askdetail
+        return ask
+
+class LabelManager(models.Manager):
+    def create(self,lb_title):
+        label=LabelInfo()
+        label.lb_title=lb_title
+        return label
+
+class ReplyManager(models.Manager):
+    def create(self,redetails,reuser):
+        re=ReplyInfo()
+        #re.re_ask=reask
+        re.re_details=redetails
+        re.re_user=reuser
+        return re
+
 class UserInfo(models.Model):
     GENDER_CHOICES=(
         (u'f',u'男'),(u'm',u'女')
@@ -25,22 +47,28 @@ class UserInfo(models.Model):
     maneger = UserManager()
 
 class AskInfo(models.Model):
-    ask_title=models.CharField(max_length=128)      #问题标题
+    ask_title=models.CharField(max_length=128,unique=True)      #问题标题
     ask_time=models.DateTimeField(auto_now_add=True)         #问题时间,创建时自动更新当前时间
-    ask_details=models.CharField(max_length=600,blank=True)    #问题详细内容
+    ask_details=models.CharField(max_length=600,blank=True,default='如题')    #问题详细内容
     ask_user=models.ForeignKey('UserInfo',on_delete=models.CASCADE)#设置外键对应用户表的主键
     #一个问题可以包含多个标签，一个标签可以包含多个问题
-    ask_lable=models.ManyToManyField('LabelInfo')
+    ask_label=models.ManyToManyField('LabelInfo',blank=True,)
     def __str__(self):
         return self.ask_title
+    maneger =AskManager()
+
+
+
+
 
 class ReplyInfo(models.Model):
+    re_ask = models.ForeignKey('AskInfo', on_delete=models.CASCADE)  # 一个问题可以有多个回答,删除问题同时删除回答
     re_details=models.TextField()
     re_time=models.DateTimeField(auto_now_add=True)
-    re_ask=models.ForeignKey('askInfo',on_delete=models.CASCADE)#一个问题可以有多个回答
-    #re_User=models.ManyToManyField('UserInfo')#一个问题可以有多个用户回答，也一个用户可以回答多个问题
-    class Meta:
-        abstract=True
+    re_user=models.ForeignKey('UserInfo',on_delete=models.CASCADE)#一个回答对应一个用户，也一个用户可以对应多个回答
+    def __str__(self):
+        return self.re_details
+    maneger=ReplyManager()
 
 class CommentInfo(models.Model):
     com_details=models.CharField(max_length=3000)
@@ -54,13 +82,11 @@ class CommentInfo(models.Model):
 
 
 class LabelInfo(models.Model):
-    lb_title=models.CharField(max_length=20)
+
+    lb_title=models.CharField(max_length=20,unique=True)
     def __str__(self):
         return self.lb_title
-    #一个标签可以有多个用户关注，一个用户也可以关注多个标签
-    lb_user=models.ManyToManyField('UserInfo')
-    #标签和问题是多对多关系
-    lb_ask=models.ManyToManyField('AskInfo')
+    maneger = LabelManager()
 #迁移完了之后，还没有添加数据等
 
 
