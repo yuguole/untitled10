@@ -10,5 +10,6 @@ urlpatterns = [
     path('addlabel',views.addlabel,name='addlabel'),
     path('addreply',views.addreply,name='addreply'),
     path('showask',views.showask,name='showask'),
+    path('showlabel',views.showlabel,name='showlabel'),
 
 ]

@@ -90,7 +90,7 @@ def addask(request):
         askuser = request.data.get('askuser')
         asktitle = request.data.get('asktitle')
         askdetail = request.data.get('askdetail')
-        asklabelid=request.POST.getlist('asklabelid[]')
+        asklabel=request.POST.getlist('asklabel[]')
         try:
             user1=UserInfo.maneger.get(username=askuser)#现在User表中查询出前端选中的用户对应对象
             testask=AskInfo.maneger.filter(ask_title=asktitle)
@@ -99,11 +99,11 @@ def addask(request):
             else:
                 a1=AskInfo(ask_title=asktitle,ask_details=askdetail,ask_user=user1)
                 a1.save()#普通数据和外键插入的数据先save
-                context['status'] = 210#除标签外保存
+                context['status'] = 200#除标签外保存
         #a1=AskInfo.objects.get(ask_title=asktitle)#查出书名对象，也就是获取要插入的多对多数据项
                 a2 = AskInfo.maneger.get(ask_title=asktitle)
-                if len(asklabelid)==1:
-                    l1=LabelInfo.maneger.get(id=asklabelid[0])#在标签表中查询出前端选中的标签对象
+                if len(asklabel)==1:
+                    l1=LabelInfo.maneger.get(lb_title=asklabel[0])#在标签表中查询出前端选中的标签对象
                     a2.ask_label.add(l1)
                     a2.save()
                     if a2:
@@ -112,15 +112,15 @@ def addask(request):
                         context['status'] = 300#标签未保存
             #a1.ask_label.add(asklabel[0])#多对多使用add方法进行插入
             #a1.save()
-                elif len(asklabelid)==0:#当前没有选中标签
+                elif len(asklabel)==0:#当前没有选中标签
                     context['status']=510#没有选中标签
                 else:#如果有很多标签，循环插入标签
-                    for lb in asklabelid:
-                        l2 = LabelInfo.maneger.get(id=lb)  #
+                    for lb in asklabel:
+                        l2 = LabelInfo.maneger.get(lb_title=lb)  #
                         a2.ask_label.add(l2)#使用add加入
                     a2.save()
                     if a2:
-                        context['status'] = 210
+                        context['status'] = 200
                     else:
                         context['status'] = 310
         except:
@@ -157,7 +157,7 @@ def showask(request):
     context = {'status': 400,'content':'null'}
     if request.method == "POST":
         # 获取到对象，之后序列化
-        ask_list=AskInfo.maneger.all().values_list('ask_title','ask_details')#'ask_details','ask_user','ask_time')
+        ask_list=AskInfo.maneger.all().values_list('ask_title','ask_details','ask_user__username','ask_time',)#'ask_details','ask_user','ask_time')
         ask_list1=convert_to_json_string_2(ask_list)
 
         return HttpResponse(ask_list1)
@@ -166,4 +166,37 @@ def showask(request):
     return HttpResponse(JSONRenderer().render(context))
 
 def convert_to_json_string_2(data):
-    return json.dumps({'ask': [{'title': i[0], 'details': i[1]} for i in data]}, indent=4)
+    #label11=[]
+    #for i in data:
+        #ask11=AskInfo.maneger.get(ask_title=i[0])
+        #label11=ask11.ask_label.get("askinfo__ask_label")
+        return json.dumps({'ask':
+                           [{'title': i[0],
+                             'details': i[1],
+                             'askuser':i[2],
+                             'asktime':str(i[3]),
+                            # 'asklable':[{j[0]}for j in label11],
+                             } for i in data]}, indent=4)
+
+@api_view(['POST'])
+def showlabel(request):
+    context = {'status': 400,'content':'null'}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        label_list=LabelInfo.maneger.all().values_list('id','lb_title',)#'ask_details','ask_user','ask_time')
+        label_list1=convert_to_json_string_label(label_list)
+
+        return HttpResponse(label_list1)
+    #return HttpResponse(JSONRenderer().render(context))
+        #return render(request,{'asklist':ask_list})
+    return HttpResponse(JSONRenderer().render(context))
+
+def convert_to_json_string_label(data):
+    #label11=[]
+    #for i in data:
+        #ask11=AskInfo.maneger.get(ask_title=i[0])
+        #label11=ask11.ask_label.get("askinfo__ask_label")
+        return json.dumps({'label':
+                           [{'labelid': i[0],
+                             'labeltitle': i[1],
+                             } for i in data]}, indent=4)
