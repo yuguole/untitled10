@@ -159,10 +159,9 @@ def showask(request):
         # 获取到对象，之后序列化
         ask_list=AskInfo.maneger.all().values_list('ask_title','ask_details','ask_user__username','ask_time',)#'ask_details','ask_user','ask_time')
         ask_list1=convert_to_json_string_2(ask_list)
-
+        #ask_list=AskInfo.maneger.get(ask_user__username='li')
+        #ask_list1=AskSerializer(ask_list)
         return HttpResponse(ask_list1)
-    #return HttpResponse(JSONRenderer().render(context))
-        #return render(request,{'asklist':ask_list})
     return HttpResponse(JSONRenderer().render(context))
 
 def convert_to_json_string_2(data):
@@ -175,7 +174,8 @@ def convert_to_json_string_2(data):
                              'details': i[1],
                              'askuser':i[2],
                              'asktime':str(i[3]),
-                            # 'asklable':[{j[0]}for j in label11],
+
+                            #'asklable':i[4],
                              } for i in data]}, indent=4)
 
 @api_view(['POST'])
@@ -200,3 +200,69 @@ def convert_to_json_string_label(data):
                            [{'labelid': i[0],
                              'labeltitle': i[1],
                              } for i in data]}, indent=4)
+
+@api_view(['POST'])
+def myask(request):
+    context = {'status': 400, 'content': "null"}
+    if request.method == "POST":
+        username = request.data.get('username')
+        try:
+            u=UserInfo.maneger.get(username=username)
+            ask = AskInfo.maneger.filter(ask_user=u)
+            #ask1=ask.values_list()
+            #ask=AskInfo.maneger.filter(ask_user__username=username)
+            # 查询集为空时候
+            if ask.count() != 0:
+                context['status'] = 200
+                serialize = serializers.serialize("json",ask)#,use_natural_keys=True)
+                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
+                context['content'] = json.loads(serialize)
+        except Exception:
+            context['status'] = 500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+@api_view(['POST'])
+def mylabel(request):
+    # 考虑到出错的可能性，一开始就设置为
+    context = {'status': 400, 'content': 'null'}
+    if request.method == "POST":
+        username = request.data.get('username', )
+        #password = request.data.get('password')
+        try:
+            user = UserInfo.maneger.get(username=username)
+            if user:
+                context['status'] = 200
+        except:
+            context['status'] = 400
+        if context['status'] == 200:
+            serializer = MylabelSerializer(user)
+            context['content'] = serializer.data
+        else:
+            context['content'] = "null"
+        content = JSONRenderer().render(serializer.data)
+        return HttpResponse(content)
+    return HttpResponse(JSONRenderer().render(context))
+
+@api_view(['POST'])
+def theask(request):
+    # 考虑到出错的可能性，一开始就设置为
+    context = {'status': 400, 'content': 'null'}
+    if request.method == "POST":
+        asktitle = request.data.get('asktitle', )
+        #password = request.data.get('password')
+        try:
+            theask = AskInfo.maneger.get(ask_title=asktitle)
+            if theask:
+                context['status'] = 200
+        except:
+            context['status'] = 400
+        if context['status'] == 200:
+            serializer = AskSerializer(theask)
+            context['content'] = serializer.data
+        else:
+            context['content'] = "null"
+        content = JSONRenderer().render(serializer.data)
+        return HttpResponse(content)
+    return HttpResponse(JSONRenderer().render(context))
+

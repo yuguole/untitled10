@@ -25,7 +25,7 @@ SECRET_KEY = 'zbh%6qab5(hoc!n9q%3(ea1k52d&*7!-=u)mbmzb8y*p%jl9do'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['yuguole.pythonanywhere.com']
+ALLOWED_HOSTS = []#['yuguole.pythonanywhere.com']
 
 
 # Application definition

@@ -10,6 +10,9 @@ urlpatterns = [
     path('addlabel',views.addlabel,name='addlabel'),
     path('addreply',views.addreply,name='addreply'),
     path('showask',views.showask,name='showask'),
-    path('showlabel',views.showlabel,name='showlabel'),
+    path('showlabel', views.showlabel, name='showlabel'),
+    path('myask', views.myask, name='myask'),
+    path('mylabel', views.mylabel, name='mylabel'),
+    path('theask',views.theask,name='theask'),
 
 ]

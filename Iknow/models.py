@@ -3,6 +3,8 @@ from django.db import models
 from rest_framework.serializers import ModelSerializer
 # Create your models here.
 class UserManager(models.Manager):
+    def get_by_natural_key(self, username, password,):
+        return self.get(username=username, password=password)
     def create(self, username, password,):
         user = UserInfo()
         user.username = username
@@ -18,6 +20,8 @@ class AskManager(models.Manager):
         return ask
 
 class LabelManager(models.Manager):
+    def get_by_natural_key(self, lb_title):
+        return self.get(lb_title=lb_title)
     def create(self,lb_title):
         label=LabelInfo()
         label.lb_title=lb_title
@@ -50,9 +54,11 @@ class AskInfo(models.Model):
     ask_title=models.CharField(max_length=128,unique=True)      #问题标题
     ask_time=models.DateTimeField(auto_now_add=True)         #问题时间,创建时自动更新当前时间
     ask_details=models.CharField(max_length=600,blank=True,default='如题')    #问题详细内容
-    ask_user=models.ForeignKey('UserInfo',on_delete=models.CASCADE)#设置外键对应用户表的主键
+    ask_user=models.ForeignKey('UserInfo', related_name='myasks',on_delete=models.CASCADE)#设置外键对应用户表的主键
     #一个问题可以包含多个标签，一个标签可以包含多个问题
     ask_label=models.ManyToManyField('LabelInfo',blank=True,)
+    class Meta:
+        ordering = ['-ask_time']  # 减号代表倒序排列
     def __str__(self):
         return self.ask_title
     maneger =AskManager()
@@ -84,6 +90,9 @@ class CommentInfo(models.Model):
 class LabelInfo(models.Model):
 
     lb_title=models.CharField(max_length=20,unique=True)
+
+    def natural_key(self):
+        return (self.lb_title)
     def __str__(self):
         return self.lb_title
     maneger = LabelManager()
