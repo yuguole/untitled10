@@ -68,6 +68,7 @@ class AskInfo(models.Model):
 
 
 class ReplyInfo(models.Model):
+    #re_comment=models.ForeignKey('CommentInfo',on_delete=models.DO_NOTHING)#可
     re_ask = models.ForeignKey('AskInfo', on_delete=models.CASCADE)  # 一个问题可以有多个回答,删除问题同时删除回答
     re_details=models.TextField()
     re_time=models.DateTimeField(auto_now_add=True)
@@ -85,6 +86,7 @@ class CommentInfo(models.Model):
     #com_user=models.ManyToManyField('UserInfo')
     class Meta:
         abstract=True
+        ordering=['-com_time']
 
 
 class LabelInfo(models.Model):

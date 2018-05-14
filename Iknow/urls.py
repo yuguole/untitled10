@@ -14,5 +14,9 @@ urlpatterns = [
     path('myask', views.myask, name='myask'),
     path('mylabel', views.mylabel, name='mylabel'),
     path('theask',views.theask,name='theask'),
+    path('label_ask',views.label_ask,name='label_ask'),
+    path('adduser_label',views.adduser_label,name='adduser_label'),
+    path('theask_reply',views.theask_reply,name='theask_reply'),
+    path('myreply',views.myreply,name='myreply'),
 
 ]

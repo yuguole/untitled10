@@ -17,6 +17,8 @@ from wsgiref.util import FileWrapper
 def index(request):
     return HttpResponse('Test..user')
 
+
+#登录
 @api_view(['POST'])
 def login(request):
     # 考虑到出错的可能性，一开始就设置为
@@ -44,6 +46,8 @@ def login(request):
 # 用户注册和登录
 # 用户名字或者QQ号码被绑定的话返回500.这里采用了Q对象
 # 测试成功
+
+#注册
 @api_view(['POST'])
 def register(request):
     context = {'status': 400}
@@ -64,6 +68,7 @@ def register(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
+#添加新的标签
 @api_view(['POST'])
 def addlabel(request):
     context={'status':400,}
@@ -81,7 +86,7 @@ def addlabel(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
-
+#添加新的问题
 @api_view(['POST'])
 def addask(request):
     context = {'status': 400}
@@ -110,8 +115,6 @@ def addask(request):
                         context['status'] = 200#全保存
                     else:
                         context['status'] = 300#标签未保存
-            #a1.ask_label.add(asklabel[0])#多对多使用add方法进行插入
-            #a1.save()
                 elif len(asklabel)==0:#当前没有选中标签
                     context['status']=510#没有选中标签
                 else:#如果有很多标签，循环插入标签
@@ -128,7 +131,7 @@ def addask(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
-
+#添加回答问题
 @api_view(['POST'])
 def addreply(request):
     context = {'status': 400}
@@ -152,6 +155,7 @@ def addreply(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
+#展示所有问题
 @api_view(['POST'])
 def showask(request):
     context = {'status': 400,'content':'null'}
@@ -163,7 +167,7 @@ def showask(request):
         #ask_list1=AskSerializer(ask_list)
         return HttpResponse(ask_list1)
     return HttpResponse(JSONRenderer().render(context))
-
+#所有问题json输出格式
 def convert_to_json_string_2(data):
     #label11=[]
     #for i in data:
@@ -178,6 +182,7 @@ def convert_to_json_string_2(data):
                             #'asklable':i[4],
                              } for i in data]}, indent=4)
 
+#展示所有标签
 @api_view(['POST'])
 def showlabel(request):
     context = {'status': 400,'content':'null'}
@@ -190,7 +195,7 @@ def showlabel(request):
     #return HttpResponse(JSONRenderer().render(context))
         #return render(request,{'asklist':ask_list})
     return HttpResponse(JSONRenderer().render(context))
-
+#标签输出形式json格式
 def convert_to_json_string_label(data):
     #label11=[]
     #for i in data:
@@ -201,6 +206,7 @@ def convert_to_json_string_label(data):
                              'labeltitle': i[1],
                              } for i in data]}, indent=4)
 
+#查询我提出的问题
 @api_view(['POST'])
 def myask(request):
     context = {'status': 400, 'content': "null"}
@@ -214,6 +220,8 @@ def myask(request):
             # 查询集为空时候
             if ask.count() != 0:
                 context['status'] = 200
+                #serialize=AskSerializer(ask)
+                #content = JSONRenderer().render(serialize.data)
                 serialize = serializers.serialize("json",ask)#,use_natural_keys=True)
                 # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
                 context['content'] = json.loads(serialize)
@@ -222,6 +230,7 @@ def myask(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
+#查询我关注的标签
 @api_view(['POST'])
 def mylabel(request):
     # 考虑到出错的可能性，一开始就设置为
@@ -244,6 +253,7 @@ def mylabel(request):
         return HttpResponse(content)
     return HttpResponse(JSONRenderer().render(context))
 
+#根据该问题展示问题的详情
 @api_view(['POST'])
 def theask(request):
     # 考虑到出错的可能性，一开始就设置为
@@ -266,3 +276,111 @@ def theask(request):
         return HttpResponse(content)
     return HttpResponse(JSONRenderer().render(context))
 
+#查询当前标签下的问题
+@api_view(['POST'])
+def label_ask(request):
+    context = {'status': 400, 'content': "null"}
+    if request.method == "POST":
+        label = request.data.get('label')
+        try:
+            l=LabelInfo.maneger.get(lb_title=label)
+            ask = AskInfo.maneger.filter(ask_label=l)
+            #ask1=ask.values_list()
+            #ask=AskInfo.maneger.filter(ask_user__username=username)
+            # 查询集为空时候
+            if ask.count() != 0:
+                context['status'] = 200
+                #serialize=AskSerializer(ask)
+                #content = JSONRenderer().render(serialize.data)
+                serialize = serializers.serialize("json",ask)#,use_natural_keys=True)
+                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
+                context['content'] = json.loads(serialize)
+        except Exception:
+            context['status'] = 500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#给用户添加关注的标签
+@api_view(['POST'])
+def adduser_label(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        username = request.data.get('username')
+        userlabel = request.POST.getlist('userlabel[]')
+        try:
+            user1=UserInfo.maneger.get(username=username)#现在User表中查询出前端选中的用户对应对象
+            #testask=AskInfo.maneger.filter(ask_title=asktitle)
+            if len(userlabel)==1:
+                l1=LabelInfo.maneger.get(lb_title=userlabel[0])#在标签表中查询出前端选中的标签对象
+                user1.user_label.add(l1)
+                user1.save()
+                if user1:
+                    context['status'] = 210#全保存
+                else:
+                    context['status'] = 300#标签未保存
+            elif len(userlabel)==0:#当前没有选中标签
+                context['status']=510#没有选中标签
+            else:#如果有很多标签，循环插入标签
+                for lb in userlabel:
+                    l2 = LabelInfo.maneger.get(lb_title=lb)  #
+                    user1.user_label.add(l2)#使用add加入
+                user1.save()
+                if user1:
+                    context['status'] = 200
+                else:
+                    context['status'] = 310
+        except:
+            context['status'] = 0
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#根据该问题展示问题的回答详情
+@api_view(['POST'])
+def theask_reply(request):
+    context = {'status': 400, 'content': "null"}
+    if request.method == "POST":
+        asktitle = request.data.get('asktitle')
+        try:
+            ask=AskInfo.maneger.get(ask_title=asktitle)
+
+            reply = ReplyInfo.maneger.filter(re_ask=ask)
+            #ask1=ask.values_list()
+            #ask=AskInfo.maneger.filter(ask_user__username=username)
+            # 查询集为空时候
+            if reply.count() != 0:
+                context['status'] = 200
+                #serialize=AskSerializer(ask)
+                #content = JSONRenderer().render(serialize.data)
+                serialize = serializers.serialize("json",reply)#,use_natural_keys=True)
+                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
+                context['content'] = json.loads(serialize)
+        except Exception:
+            context['status'] = 500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#我回答过的问题
+@api_view(['POST'])
+def myreply(request):
+    context = {'status': 400, 'content': "null"}
+    if request.method == "POST":
+        username = request.data.get('username')
+        try:
+            user=UserInfo.maneger.get(username=username)
+
+            reply = ReplyInfo.maneger.filter(re_user=user)
+            #ask1=ask.values_list()
+            #ask=AskInfo.maneger.filter(ask_user__username=username)
+            # 查询集为空时候
+            if reply.count() != 0:
+                context['status'] = 200
+                #serialize=AskSerializer(ask)
+                #content = JSONRenderer().render(serialize.data)
+                serialize = serializers.serialize("json",reply)#,use_natural_keys=True)
+                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
+                context['content'] = json.loads(serialize)
+        except Exception:
+            context['status'] = 500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
