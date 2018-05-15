@@ -18,5 +18,6 @@ urlpatterns = [
     path('adduser_label',views.adduser_label,name='adduser_label'),
     path('theask_reply',views.theask_reply,name='theask_reply'),
     path('myreply',views.myreply,name='myreply'),
+    path('theuser',views.theuser,name='theuser'),
 
 ]

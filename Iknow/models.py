@@ -52,7 +52,7 @@ class UserInfo(models.Model):
 
 class AskInfo(models.Model):
     ask_title=models.CharField(max_length=128,unique=True)      #问题标题
-    ask_time=models.DateTimeField(auto_now_add=True)         #问题时间,创建时自动更新当前时间
+    ask_time=models.CharField(max_length=60)         #问题时间,创建时从前台获取当前时间
     ask_details=models.CharField(max_length=600,blank=True,default='如题')    #问题详细内容
     ask_user=models.ForeignKey('UserInfo', related_name='myasks',on_delete=models.CASCADE)#设置外键对应用户表的主键
     #一个问题可以包含多个标签，一个标签可以包含多个问题
@@ -71,15 +71,17 @@ class ReplyInfo(models.Model):
     #re_comment=models.ForeignKey('CommentInfo',on_delete=models.DO_NOTHING)#可
     re_ask = models.ForeignKey('AskInfo', on_delete=models.CASCADE)  # 一个问题可以有多个回答,删除问题同时删除回答
     re_details=models.TextField()
-    re_time=models.DateTimeField(auto_now_add=True)
+    re_time=models.CharField(max_length=60)
     re_user=models.ForeignKey('UserInfo',on_delete=models.CASCADE)#一个回答对应一个用户，也一个用户可以对应多个回答
     def __str__(self):
         return self.re_details
+    class Meta:
+        ordering=['-re_time']
     maneger=ReplyManager()
 
 class CommentInfo(models.Model):
     com_details=models.CharField(max_length=3000)
-    com_time=models.DateTimeField(auto_now_add=True)
+    com_time=models.CharField(max_length=60)
     #一个回答可以有多个评论
     com_reply=models.ForeignKey('ReplyInfo',on_delete=models.CASCADE)
     #一个用户可以评论多个回答，一个回答也可以有多个用户评论

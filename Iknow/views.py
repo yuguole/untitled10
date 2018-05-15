@@ -95,6 +95,7 @@ def addask(request):
         askuser = request.data.get('askuser')
         asktitle = request.data.get('asktitle')
         askdetail = request.data.get('askdetail')
+        asktime=request.data.get('asktime')
         asklabel=request.POST.getlist('asklabel[]')
         try:
             user1=UserInfo.maneger.get(username=askuser)#现在User表中查询出前端选中的用户对应对象
@@ -102,7 +103,7 @@ def addask(request):
             if testask:
                 context['status'] = 500#有相同的问题
             else:
-                a1=AskInfo(ask_title=asktitle,ask_details=askdetail,ask_user=user1)
+                a1=AskInfo(ask_title=asktitle,ask_details=askdetail,ask_user=user1,ask_time=asktime)
                 a1.save()#普通数据和外键插入的数据先save
                 context['status'] = 200#除标签外保存
         #a1=AskInfo.objects.get(ask_title=asktitle)#查出书名对象，也就是获取要插入的多对多数据项
@@ -140,10 +141,11 @@ def addreply(request):
         reaskid = request.data.get('reaskid')
         redetail = request.data.get('redetail')
         reuser = request.data.get('reuser')
+        retime=request.data.get('retime')
         user1 = UserInfo.maneger.get(username=reuser)  # 现在User表中查询出前端选中的用户对应对象
         #ask1=AskInfo.maneger.get(id=reaskid)#找出对应id的问题表对象
         ask1=AskInfo.maneger.get(id=reaskid)#在问题表中查询出前端选中的用户对象
-        r1 = ReplyInfo(re_details=redetail,re_ask=ask1,re_user=user1)
+        r1 = ReplyInfo(re_details=redetail,re_ask=ask1,re_user=user1,re_time=retime)
         r1.save()  # 普通数据和外键插入的数据先save
         if r1:
             #r2=ReplyInfo.maneger.filter(re_ask=user1)
@@ -177,7 +179,7 @@ def convert_to_json_string_2(data):
                            [{'title': i[0],
                              'details': i[1],
                              'askuser':i[2],
-                             'asktime':str(i[3]),
+                             'asktime':i[3],
 
                             #'asklable':i[4],
                              } for i in data]}, indent=4)
@@ -355,6 +357,9 @@ def theask_reply(request):
                 serialize = serializers.serialize("json",reply)#,use_natural_keys=True)
                 # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
                 context['content'] = json.loads(serialize)
+
+            else :
+                context['status'] = 300
         except Exception:
             context['status'] = 500
         return HttpResponse(JSONRenderer().render(context))
@@ -383,4 +388,27 @@ def myreply(request):
         except Exception:
             context['status'] = 500
         return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#根据用户id展示用户的详情
+@api_view(['POST'])
+def theuser(request):
+    # 考虑到出错的可能性，一开始就设置为
+    context = {'status': 400, 'content': 'null'}
+    if request.method == "POST":
+        userid = request.data.get('userid', )
+        #password = request.data.get('password')
+        try:
+            theuser = UserInfo.maneger.get(id=userid)
+            if theuser:
+                context['status'] = 200
+        except:
+            context['status'] = 400
+        if context['status'] == 200:
+            serializer = UserSerializer(theuser)
+            context['content'] = serializer.data
+        else:
+            context['content'] = "null"
+        content = JSONRenderer().render(serializer.data)
+        return HttpResponse(content)
     return HttpResponse(JSONRenderer().render(context))
