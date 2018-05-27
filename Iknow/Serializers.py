@@ -45,6 +45,7 @@ class ReplySerializer(ModelSerializer):
     class Meta:
         model=ReplyInfo
         fields="__all__"
+        depth = 1
 
 class MylabelSerializer(serializers.ModelSerializer):
     class Meta:

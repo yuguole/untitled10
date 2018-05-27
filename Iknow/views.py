@@ -96,7 +96,7 @@ def addask(request):
         asktitle = request.data.get('asktitle')
         askdetail = request.data.get('askdetail')
         asktime=request.data.get('asktime')
-        asklabel=request.POST.getlist('asklabel[]')
+        asklabel=request.data.getlist('asklabel[]')
         try:
             user1=UserInfo.maneger.get(username=askuser)#现在User表中查询出前端选中的用户对应对象
             testask=AskInfo.maneger.filter(ask_title=asktitle)
@@ -199,11 +199,7 @@ def showlabel(request):
     return HttpResponse(JSONRenderer().render(context))
 #标签输出形式json格式
 def convert_to_json_string_label(data):
-    #label11=[]
-    #for i in data:
-        #ask11=AskInfo.maneger.get(ask_title=i[0])
-        #label11=ask11.ask_label.get("askinfo__ask_label")
-        return json.dumps({'label':
+    return json.dumps({'label':
                            [{'labelid': i[0],
                              'labeltitle': i[1],
                              } for i in data]}, indent=4)
@@ -278,29 +274,54 @@ def theask(request):
         return HttpResponse(content)
     return HttpResponse(JSONRenderer().render(context))
 
+#根据该回复展示回复详情
+@api_view(['POST'])
+def thereply(request):
+    # 考虑到出错的可能性，一开始就设置为
+    context = {'status': 400, 'content': 'null'}
+    if request.method == "POST":
+        replyid = request.data.get('replyid', )
+        #password = request.data.get('password')
+        try:
+            thereply = ReplyInfo.maneger.get(id=replyid)
+            if thereply:
+                context['status'] = 200
+        except:
+            context['status'] = 400
+        if context['status'] == 200:
+            serializer = ReplySerializer(thereply)
+            context['content'] = serializer.data
+        else:
+            context['content'] = "null"
+        content = JSONRenderer().render(serializer.data)
+        return HttpResponse(content)
+    return HttpResponse(JSONRenderer().render(context))
+
 #查询当前标签下的问题
 @api_view(['POST'])
 def label_ask(request):
     context = {'status': 400, 'content': "null"}
     if request.method == "POST":
         label = request.data.get('label')
-        try:
-            l=LabelInfo.maneger.get(lb_title=label)
-            ask = AskInfo.maneger.filter(ask_label=l)
-            #ask1=ask.values_list()
-            #ask=AskInfo.maneger.filter(ask_user__username=username)
-            # 查询集为空时候
-            if ask.count() != 0:
-                context['status'] = 200
-                #serialize=AskSerializer(ask)
-                #content = JSONRenderer().render(serialize.data)
-                serialize = serializers.serialize("json",ask)#,use_natural_keys=True)
-                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
-                context['content'] = json.loads(serialize)
-        except Exception:
-            context['status'] = 500
-        return HttpResponse(JSONRenderer().render(context))
+        l=LabelInfo.maneger.get(lb_title=label)
+        label_asklist = AskInfo.maneger.filter(ask_label=l)
+        if label_asklist.count() != 0:
+            label_asklist = label_asklist.values_list('ask_title','ask_user__username', 'ask_details','ask_time')
+            context['status'] = 200
+            label_asklist1 = convert_to_json_string_lael_ask(label_asklist)
+            return HttpResponse(label_asklist1)
+        else:
+            context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
+
+def convert_to_json_string_lael_ask(data):
+    return json.dumps({'label_ask':
+                           [{'asktitle': i[0],
+                             'askuser': i[1],
+                             'askdetails': i[2],
+                             'asktime': i[3],
+                             } for i in data]}, indent=4)
+
 
 #给用户添加关注的标签
 @api_view(['POST'])
@@ -343,27 +364,23 @@ def theask_reply(request):
     context = {'status': 400, 'content': "null"}
     if request.method == "POST":
         asktitle = request.data.get('asktitle')
-        try:
-            ask=AskInfo.maneger.get(ask_title=asktitle)
-
-            reply = ReplyInfo.maneger.filter(re_ask=ask)
-            #ask1=ask.values_list()
-            #ask=AskInfo.maneger.filter(ask_user__username=username)
-            # 查询集为空时候
-            if reply.count() != 0:
-                context['status'] = 200
-                #serialize=AskSerializer(ask)
-                #content = JSONRenderer().render(serialize.data)
-                serialize = serializers.serialize("json",reply)#,use_natural_keys=True)
-                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
-                context['content'] = json.loads(serialize)
-
-            else :
-                context['status'] = 300
-        except Exception:
-            context['status'] = 500
-        return HttpResponse(JSONRenderer().render(context))
+        replylist = ReplyInfo.maneger.filter(re_ask__ask_title=asktitle)
+            # theask = AskInfo.maneger.get(ask_title=asktitle)
+        if replylist.count() != 0:
+            replylist=replylist.values_list('re_ask__ask_title', 're_user__username', 're_details', 're_time')
+            context['status'] = 200
+            replylist1 = convert_to_json_string_relist(replylist)
+            return HttpResponse(replylist1)
+        else:
+            context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
+def convert_to_json_string_relist(data):
+    return json.dumps({'the_reply':
+                           [{'replyask': i[0],
+                             'replyuser': i[1],
+                             'redetails':i[2],
+                             'retime':i[3],
+                             } for i in data]}, indent=4)
 
 #我回答过的问题
 @api_view(['POST'])
@@ -371,24 +388,23 @@ def myreply(request):
     context = {'status': 400, 'content': "null"}
     if request.method == "POST":
         username = request.data.get('username')
-        try:
-            user=UserInfo.maneger.get(username=username)
-
-            reply = ReplyInfo.maneger.filter(re_user=user)
-            #ask1=ask.values_list()
-            #ask=AskInfo.maneger.filter(ask_user__username=username)
-            # 查询集为空时候
-            if reply.count() != 0:
-                context['status'] = 200
-                #serialize=AskSerializer(ask)
-                #content = JSONRenderer().render(serialize.data)
-                serialize = serializers.serialize("json",reply)#,use_natural_keys=True)
-                # 这里先将json对象转化为列表进行存储缺少这一步的话将无法解析。
-                context['content'] = json.loads(serialize)
-        except Exception:
-            context['status'] = 500
-        return HttpResponse(JSONRenderer().render(context))
+        myreplylist = ReplyInfo.maneger.filter(re_user__username=username)
+        # theask = AskInfo.maneger.get(ask_title=asktitle)
+        if myreplylist.count() != 0:
+            myreplylist = myreplylist.values_list('re_ask__ask_title','re_details', 're_time')
+            context['status'] = 200
+            myreplylist1 = convert_to_json_string_myrelist(myreplylist)
+            return HttpResponse(myreplylist1)
+        else:
+            context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
+def convert_to_json_string_myrelist(data):
+    return json.dumps({'myreply':
+                           [{'replyask': i[0],
+                             'replydetail': i[1],
+                             'replytime': i[2],
+                             } for i in data]}, indent=4)
+
 
 #根据用户id展示用户的详情
 @api_view(['POST'])

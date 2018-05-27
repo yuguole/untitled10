@@ -28,11 +28,12 @@ class LabelManager(models.Manager):
         return label
 
 class ReplyManager(models.Manager):
-    def create(self,redetails,reuser):
+    def create(self,redetails,reuser,reask):
         re=ReplyInfo()
         #re.re_ask=reask
         re.re_details=redetails
         re.re_user=reuser
+        re.re_ask=reask
         return re
 
 class UserInfo(models.Model):

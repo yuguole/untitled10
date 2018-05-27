@@ -19,5 +19,6 @@ urlpatterns = [
     path('theask_reply',views.theask_reply,name='theask_reply'),
     path('myreply',views.myreply,name='myreply'),
     path('theuser',views.theuser,name='theuser'),
+    path('thereply',views.thereply,name='thereply'),
 
 ]
