@@ -308,19 +308,19 @@ def label_ask(request):
         if label_asklist.count() != 0:
             label_asklist = label_asklist.values_list('ask_title','ask_user__username', 'ask_details','ask_time')
             context['status'] = 200
-            label_asklist1 = convert_to_json_string_lael_ask(label_asklist)
+            label_asklist1 = convert_to_json_string_lael_ask(label_asklist,context['status'])
             return HttpResponse(label_asklist1)
         else:
             context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
 
-def convert_to_json_string_lael_ask(data):
+def convert_to_json_string_lael_ask(data,status):
     return json.dumps({'label_ask':
                            [{'asktitle': i[0],
                              'askuser': i[1],
                              'askdetails': i[2],
                              'asktime': i[3],
-                             } for i in data]}, indent=4)
+                             } for i in data], 'status':status}, indent=4)
 
 
 #给用户添加关注的标签
@@ -369,18 +369,19 @@ def theask_reply(request):
         if replylist.count() != 0:
             replylist=replylist.values_list('re_ask__ask_title', 're_user__username', 're_details', 're_time')
             context['status'] = 200
-            replylist1 = convert_to_json_string_relist(replylist)
-            return HttpResponse(replylist1)
+            replylist1 = convert_to_json_string_relist(replylist,context['status'])
+            #context['content']=replylist1
+            return HttpResponse(replylist1,JSONRenderer().render(context))
         else:
             context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
-def convert_to_json_string_relist(data):
+def convert_to_json_string_relist(data,status):
     return json.dumps({'the_reply':
                            [{'replyask': i[0],
                              'replyuser': i[1],
                              'redetails':i[2],
                              'retime':i[3],
-                             } for i in data]}, indent=4)
+                             } for i in data], 'status':status}, indent=4)
 
 #我回答过的问题
 @api_view(['POST'])
@@ -393,17 +394,17 @@ def myreply(request):
         if myreplylist.count() != 0:
             myreplylist = myreplylist.values_list('re_ask__ask_title','re_details', 're_time')
             context['status'] = 200
-            myreplylist1 = convert_to_json_string_myrelist(myreplylist)
+            myreplylist1 = convert_to_json_string_myrelist(myreplylist,context['status'])
             return HttpResponse(myreplylist1)
         else:
             context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
-def convert_to_json_string_myrelist(data):
+def convert_to_json_string_myrelist(data,status):
     return json.dumps({'myreply':
                            [{'replyask': i[0],
                              'replydetail': i[1],
                              'replytime': i[2],
-                             } for i in data]}, indent=4)
+                             } for i in data], 'status':status}, indent=4)
 
 
 #根据用户id展示用户的详情

@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56a90716-f28c-4ba5-ab59-c3b1d0005150" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iknow/Serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/Serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iknow/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iknow/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iknow/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,11 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Iknow/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="293" column="13" lean-forward="true" selection-start-line="293" selection-start-column="13" selection-end-line="293" selection-end-column="13" />
+            <state relative-caret-position="-779">
+              <caret line="208" column="19" selection-start-line="208" selection-start-column="19" selection-end-line="208" selection-end-column="19" />
               <folding>
                 <element signature="e#679#1410#0" />
                 <element signature="e#1526#2177#0" />
@@ -47,20 +42,22 @@
                 <element signature="e#7278#7458#0" />
                 <element signature="e#7664#8594#0" />
                 <element signature="e#8652#9376#0" />
+                <element signature="e#9287#10013#0" />
+                <element signature="e#10073#10799#0" />
                 <element signature="e#10075#10561#0" />
-                <element signature="e#10771#11048#0" />
+                <element signature="e#11558#11852#0" />
                 <element signature="e#11214#12495#0" />
                 <element signature="e#12414#13056#0" />
-                <element signature="e#13280#13284#0" />
+                <element signature="e#14038#14330#0" />
                 <element signature="e#13454#14098#0" />
-                <element signature="e#14149#14426#0" />
+                <element signature="e#15104#15353#0" />
                 <element signature="e#14161#14879#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Iknow/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="348">
@@ -146,9 +143,9 @@
         <option value="$PROJECT_DIR$/Iknow/admin.py" />
         <option value="$PROJECT_DIR$/untitled10/settings.py" />
         <option value="$PROJECT_DIR$/Iknow/models.py" />
-        <option value="$PROJECT_DIR$/Iknow/views.py" />
         <option value="$PROJECT_DIR$/Iknow/Serializers.py" />
         <option value="$PROJECT_DIR$/Iknow/urls.py" />
+        <option value="$PROJECT_DIR$/Iknow/views.py" />
       </list>
     </option>
   </component>
@@ -158,7 +155,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="width" value="977" />
     <option name="height" value="1088" />
@@ -269,8 +266,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.24497992" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32797858" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32931727" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.26238286" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18297587" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.20481928" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18297587" />
       <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="R Graphics" order="4" />
@@ -316,13 +313,15 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
           </folding>
         </state>
@@ -354,13 +353,15 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
           </folding>
         </state>
@@ -382,13 +383,15 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
           </folding>
         </state>
@@ -492,13 +495,15 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
           </folding>
         </state>
@@ -527,13 +532,15 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
           </folding>
         </state>
@@ -603,13 +610,15 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
           </folding>
         </state>
@@ -809,10 +818,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Iknow/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Iknow/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="293" column="13" lean-forward="true" selection-start-line="293" selection-start-column="13" selection-end-line="293" selection-end-column="13" />
+        <state relative-caret-position="-779">
+          <caret line="208" column="19" selection-start-line="208" selection-start-column="19" selection-end-line="208" selection-end-column="19" />
           <folding>
             <element signature="e#679#1410#0" />
             <element signature="e#1526#2177#0" />
@@ -825,24 +844,16 @@
             <element signature="e#7278#7458#0" />
             <element signature="e#7664#8594#0" />
             <element signature="e#8652#9376#0" />
+            <element signature="e#9287#10013#0" />
+            <element signature="e#10073#10799#0" />
             <element signature="e#10075#10561#0" />
-            <element signature="e#10771#11048#0" />
+            <element signature="e#11558#11852#0" />
             <element signature="e#11214#12495#0" />
             <element signature="e#12414#13056#0" />
-            <element signature="e#13280#13284#0" />
+            <element signature="e#14038#14330#0" />
             <element signature="e#13454#14098#0" />
-            <element signature="e#14149#14426#0" />
+            <element signature="e#15104#15353#0" />
             <element signature="e#14161#14879#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Iknow/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
