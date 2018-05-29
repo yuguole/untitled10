@@ -65,15 +65,13 @@ class AskInfo(models.Model):
     maneger =AskManager()
 
 
-
-
-
 class ReplyInfo(models.Model):
     #re_comment=models.ForeignKey('CommentInfo',on_delete=models.DO_NOTHING)#可
     re_ask = models.ForeignKey('AskInfo', on_delete=models.CASCADE)  # 一个问题可以有多个回答,删除问题同时删除回答
     re_details=models.TextField()
     re_time=models.CharField(max_length=60)
-    re_user=models.ForeignKey('UserInfo',on_delete=models.CASCADE)#一个回答对应一个用户，也一个用户可以对应多个回答
+    re_user=models.ForeignKey('UserInfo', on_delete=models.CASCADE)#一个回答对应一个用户，也一个用户可以对应多个回答
+    re_like=models.ManyToManyField('UserInfo',related_name='re_like_user', blank=True)#点赞功能
     def __str__(self):
         return self.re_details
     class Meta:

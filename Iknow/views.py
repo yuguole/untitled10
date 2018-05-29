@@ -157,6 +157,29 @@ def addreply(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
+#添加回答的点赞
+@api_view(['POST'])
+def addreply_like(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        relike_username = request.data.get('username')
+        re_id=request.data.get('replyid')
+        user1 = UserInfo.maneger.get(username=relike_username)  # 现在User表中查询出前端选中的用户对应对象
+        #ask1=AskInfo.maneger.get(id=reaskid)#找出对应id的问题表对象
+        r1 = ReplyInfo.maneger.get(id=re_id)
+        r1.re_like.add(user1)
+        r1.save()  # 普通数据和外键插入的数据先save
+        if r1:
+            #r2=ReplyInfo.maneger.filter(re_ask=user1)
+            #r2.re_user.add(reuser)
+            context['status'] = 200
+        else:
+            context['status']=500
+
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
 #展示所有问题
 @api_view(['POST'])
 def showask(request):
@@ -367,7 +390,7 @@ def theask_reply(request):
         replylist = ReplyInfo.maneger.filter(re_ask__ask_title=asktitle)
             # theask = AskInfo.maneger.get(ask_title=asktitle)
         if replylist.count() != 0:
-            replylist=replylist.values_list('re_ask__ask_title', 're_user__username', 're_details', 're_time')
+            replylist=replylist.values_list('re_ask__ask_title', 're_user__username', 're_details', 're_time','id')
             context['status'] = 200
             replylist1 = convert_to_json_string_relist(replylist,context['status'])
             #context['content']=replylist1
@@ -381,6 +404,7 @@ def convert_to_json_string_relist(data,status):
                              'replyuser': i[1],
                              'redetails':i[2],
                              'retime':i[3],
+                             'reid':i[4],
                              } for i in data], 'status':status}, indent=4)
 
 #我回答过的问题
@@ -392,7 +416,7 @@ def myreply(request):
         myreplylist = ReplyInfo.maneger.filter(re_user__username=username)
         # theask = AskInfo.maneger.get(ask_title=asktitle)
         if myreplylist.count() != 0:
-            myreplylist = myreplylist.values_list('re_ask__ask_title','re_details', 're_time')
+            myreplylist = myreplylist.values_list('id','re_ask__ask_title','re_details', 're_time')
             context['status'] = 200
             myreplylist1 = convert_to_json_string_myrelist(myreplylist,context['status'])
             return HttpResponse(myreplylist1)
@@ -401,11 +425,36 @@ def myreply(request):
     return HttpResponse(JSONRenderer().render(context))
 def convert_to_json_string_myrelist(data,status):
     return json.dumps({'myreply':
-                           [{'replyask': i[0],
-                             'replydetail': i[1],
-                             'replytime': i[2],
+                           [{'replyid':i[0],
+                             'replyask': i[1],
+                             'replydetail': i[2],
+                             'replytime': i[3],
+
                              } for i in data], 'status':status}, indent=4)
 
+#我的问题新回答通知
+@api_view(['POST'])
+def myask_reinform(request):
+    context = {'status': 400, 'content': "null"}
+    if request.method == "POST":
+        username = request.data.get('username')
+        myask_replylist = ReplyInfo.maneger.filter(re_ask__ask_user__username=username)
+        # theask = AskInfo.maneger.get(ask_title=asktitle)
+        if myask_replylist.count() != 0:
+            myask_replylist = myask_replylist.values_list('id','re_ask__ask_title','re_user__username','re_time')
+            context['status'] = 200
+            myask_replylist1 = convert_to_json_string_myrelist(myask_replylist,context['status'])
+            return HttpResponse(myask_replylist1)
+        else:
+            context['status'] = 300
+    return HttpResponse(JSONRenderer().render(context))
+def convert_to_json_string_myask_reinform(data,status):
+    return json.dumps({'myreply':
+                           [{'re_infoid':i[0],
+                             're_infoask': i[1],
+                             're_infousr': i[2],
+                             're_infotime': i[3],
+                             } for i in data], 'status':status}, indent=4)
 
 #根据用户id展示用户的详情
 @api_view(['POST'])
