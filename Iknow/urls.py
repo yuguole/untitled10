@@ -22,5 +22,5 @@ urlpatterns = [
     path('thereply',views.thereply,name='thereply'),#该回复详情
     path('addreply_like',views.addreply_like,name='addreply_like'),#添加点赞人数
     path('myask_reinform',views.myask_reinform,name='myask_reinform'),#我提出的问题回复通知
-
+    path('delete_relike',views.delete_relike,name='delete_relike')#取消点赞
 ]

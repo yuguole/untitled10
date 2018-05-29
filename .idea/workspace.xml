@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56a90716-f28c-4ba5-ab59-c3b1d0005150" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Iknow/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iknow/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Iknow/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Iknow/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Iknow/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="434" column="10" selection-start-line="434" selection-start-column="10" selection-end-line="434" selection-end-column="10" />
+            <state relative-caret-position="184">
+              <caret line="193" column="32" lean-forward="true" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="32" />
               <folding>
                 <element signature="e#679#1410#0" />
                 <element signature="e#1526#2177#0" />
@@ -55,17 +52,18 @@
                 <element signature="e#14494#15168#0" />
                 <element signature="e#15223#15557#0" />
                 <element signature="e#16391#17105#0" />
+                <element signature="e#17166#17461#0" />
                 <element signature="e#15581#16299#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Iknow/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
+            <state relative-caret-position="432">
+              <caret line="24" column="71" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -148,8 +146,8 @@
         <option value="$PROJECT_DIR$/untitled10/settings.py" />
         <option value="$PROJECT_DIR$/Iknow/Serializers.py" />
         <option value="$PROJECT_DIR$/Iknow/models.py" />
-        <option value="$PROJECT_DIR$/Iknow/views.py" />
         <option value="$PROJECT_DIR$/Iknow/urls.py" />
+        <option value="$PROJECT_DIR$/Iknow/views.py" />
       </list>
     </option>
   </component>
@@ -159,7 +157,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-9" />
     <option name="width" value="978" />
     <option name="height" value="1089" />
@@ -261,7 +259,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="878" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32931727" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
@@ -269,7 +267,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.24497992" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32797858" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32931727" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.28915662" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.20615797" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18565683" />
       <window_info anchor="right" id="R Packages" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -325,6 +323,7 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
           </folding>
         </state>
@@ -365,6 +364,7 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
           </folding>
         </state>
@@ -395,6 +395,7 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
           </folding>
         </state>
@@ -507,6 +508,7 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
           </folding>
         </state>
@@ -544,6 +546,7 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
           </folding>
         </state>
@@ -622,6 +625,7 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
           </folding>
         </state>
@@ -821,10 +825,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Iknow/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" column="71" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Iknow/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="434" column="10" selection-start-line="434" selection-start-column="10" selection-end-line="434" selection-end-column="10" />
+        <state relative-caret-position="184">
+          <caret line="193" column="32" lean-forward="true" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="32" />
           <folding>
             <element signature="e#679#1410#0" />
             <element signature="e#1526#2177#0" />
@@ -846,17 +860,8 @@
             <element signature="e#14494#15168#0" />
             <element signature="e#15223#15557#0" />
             <element signature="e#16391#17105#0" />
+            <element signature="e#17166#17461#0" />
             <element signature="e#15581#16299#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Iknow/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>

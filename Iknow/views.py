@@ -180,6 +180,27 @@ def addreply_like(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
+#取消点赞
+@api_view(['POST'])
+def delete_relike(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        delete_good_username = request.data.get('username')
+        re_id = request.data.get('replyid')
+
+        user1 = UserInfo.maneger.get(username=delete_good_username)   #获取到将要取消的对象
+        r1 = ReplyInfo.maneger.get(id=re_id)#获取到对应回复下的将要减1赞的回复对象
+        r1.re_like.remove(user1)
+        if r1:
+            #r2=ReplyInfo.maneger.filter(re_ask=user1)
+            #r2.re_user.add(reuser)
+            context['status'] = 200
+        else:
+            context['status']=500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
 #展示所有问题
 @api_view(['POST'])
 def showask(request):
@@ -443,18 +464,20 @@ def myask_reinform(request):
         if myask_replylist.count() != 0:
             myask_replylist = myask_replylist.values_list('id','re_ask__ask_title','re_user__username','re_time')
             context['status'] = 200
-            myask_replylist1 = convert_to_json_string_myrelist(myask_replylist,context['status'])
+            myask_replylist1 = convert_to_json_string_myask_reinform(myask_replylist,context['status'])
             return HttpResponse(myask_replylist1)
         else:
             context['status'] = 300
     return HttpResponse(JSONRenderer().render(context))
 def convert_to_json_string_myask_reinform(data,status):
-    return json.dumps({'myreply':
+    return json.dumps({'myask_reinfo':
                            [{'re_infoid':i[0],
                              're_infoask': i[1],
                              're_infousr': i[2],
                              're_infotime': i[3],
                              } for i in data], 'status':status}, indent=4)
+
+
 
 #根据用户id展示用户的详情
 @api_view(['POST'])
