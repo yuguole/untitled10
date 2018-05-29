@@ -201,6 +201,50 @@ def delete_relike(request):
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
+#添加回答的踩
+@api_view(['POST'])
+def addreply_bad(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        relike_username = request.data.get('username')
+        re_id=request.data.get('replyid')
+        user1 = UserInfo.maneger.get(username=relike_username)  # 现在User表中查询出前端选中的用户对应对象
+        #ask1=AskInfo.maneger.get(id=reaskid)#找出对应id的问题表对象
+        r1 = ReplyInfo.maneger.get(id=re_id)
+        r1.re_bad.add(user1)
+        r1.save()  # 普通数据和外键插入的数据先save
+        if r1:
+            #r2=ReplyInfo.maneger.filter(re_ask=user1)
+            #r2.re_user.add(reuser)
+            context['status'] = 200
+        else:
+            context['status']=500
+
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#取消踩
+@api_view(['POST'])
+def delete_rebad(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        delete_good_username = request.data.get('username')
+        re_id = request.data.get('replyid')
+
+        user1 = UserInfo.maneger.get(username=delete_good_username)   #获取到将要取消的对象
+        r1 = ReplyInfo.maneger.get(id=re_id)#获取到对应回复下的将要减1赞的回复对象
+        r1.re_bad.remove(user1)
+        if r1:
+            #r2=ReplyInfo.maneger.filter(re_ask=user1)
+            #r2.re_user.add(reuser)
+            context['status'] = 200
+        else:
+            context['status']=500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
 #展示所有问题
 @api_view(['POST'])
 def showask(request):

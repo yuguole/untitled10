@@ -20,7 +20,9 @@ urlpatterns = [
     path('myreply',views.myreply,name='myreply'),#我回复的问题
     path('theuser',views.theuser,name='theuser'),#该用户详情
     path('thereply',views.thereply,name='thereply'),#该回复详情
-    path('addreply_like',views.addreply_like,name='addreply_like'),#添加点赞人数
     path('myask_reinform',views.myask_reinform,name='myask_reinform'),#我提出的问题回复通知
-    path('delete_relike',views.delete_relike,name='delete_relike')#取消点赞
+    path('delete_relike',views.delete_relike,name='delete_relike'),#取消点赞
+    path('addreply_like',views.addreply_like,name='addreply_like'),#添加点赞人数
+    path('delete_rebad',views.delete_rebad,name='delete_rebad'),#取消踩
+    path('addreply_bad',views.addreply_bad,name='addreply_bad'),#添加踩
 ]
