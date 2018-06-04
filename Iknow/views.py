@@ -96,7 +96,7 @@ def addask(request):
         asktitle = request.data.get('asktitle')
         askdetail = request.data.get('askdetail')
         asktime=request.data.get('asktime')
-        asklabel=request.data.getlist('asklabel[]')
+        asklabel=request.data.getlist('asklabel',[])
         try:
             user1=UserInfo.maneger.get(username=askuser)#现在User表中查询出前端选中的用户对应对象
             testask=AskInfo.maneger.filter(ask_title=asktitle)
@@ -131,6 +131,58 @@ def addask(request):
             context['status'] = 0
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
+
+#仅仅添加问题
+@api_view(['POST'])
+def add_ask(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        # 获取到对象，之后序列化
+        askuser = request.data.get('askuser')
+        asktitle = request.data.get('asktitle')
+        askdetail = request.data.get('askdetail')
+        asktime = request.data.get('asktime')
+        try:
+            user1=UserInfo.maneger.get(username=askuser)#现在User表中查询出前端选中的用户对应对象
+            testask=AskInfo.maneger.filter(ask_title=asktitle)
+            if testask:
+                context['status'] = 500#有相同的问题
+            else:
+                a1=AskInfo(ask_title=asktitle,ask_details=askdetail,ask_user=user1,ask_time=asktime)
+                a1.save()#普通数据和外键插入的数据先save
+                if a1:
+                    context['status'] = 200#除标签外保存
+                else:
+                    context['status']=600
+        except:
+            context['status'] = 0
+
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#添加问题的标签
+@api_view(['POST'])
+def add_asklabel(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        asktitle = request.data.get('asktitle')
+        asklabel=request.data.get('asklabel')
+        try:
+            a2 = AskInfo.maneger.get(ask_title=asktitle)
+            l1=LabelInfo.maneger.get(lb_title=asklabel)#在标签表中查询出前端选中的标签对象
+            a2.ask_label.add(l1)
+            a2.save()
+            if a2:
+                context['status'] = 200#全保存
+            else:
+                context['status'] = 300#标签未保存
+        except:
+            context['status'] = 500
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
 
 #添加回答问题
 @api_view(['POST'])

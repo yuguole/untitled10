@@ -25,4 +25,9 @@ urlpatterns = [
     path('addreply_like',views.addreply_like,name='addreply_like'),#添加点赞人数
     path('delete_rebad',views.delete_rebad,name='delete_rebad'),#取消踩
     path('addreply_bad',views.addreply_bad,name='addreply_bad'),#添加踩
+
+    path('add_ask',views.add_ask,name='add_ask'),#仅仅添加问题详情
+    path('add_asklabel',views.add_asklabel,name='add_asklabel'),#添加问题的标签
+
+
 ]
