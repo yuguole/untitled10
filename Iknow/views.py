@@ -75,8 +75,8 @@ def addlabel(request):
     if request.method == "POST":
         #获取到对象，之后序列化
         lb_title = request.data.get('lb_title')
-        user = LabelInfo.maneger.filter(lb_title=lb_title)
-        if user:
+        label = LabelInfo.maneger.filter(lb_title=lb_title)
+        if label:
             context['status'] = 500
         else:
             lb=LabelInfo(lb_title=lb_title)
@@ -387,8 +387,8 @@ def mylabel(request):
             context['content'] = serializer.data
         else:
             context['content'] = "null"
-        content = JSONRenderer().render(serializer.data)
-        return HttpResponse(content)
+       # content = JSONRenderer().render(serializer.data)
+        return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
 #根据该问题展示问题的详情
@@ -470,29 +470,15 @@ def adduser_label(request):
     if request.method == "POST":
         # 获取到对象，之后序列化
         username = request.data.get('username')
-        userlabel = request.POST.getlist('userlabel[]')
+        userlabel = request.data.get('userlabel')
         try:
             user1=UserInfo.maneger.get(username=username)#现在User表中查询出前端选中的用户对应对象
-            #testask=AskInfo.maneger.filter(ask_title=asktitle)
-            if len(userlabel)==1:
-                l1=LabelInfo.maneger.get(lb_title=userlabel[0])#在标签表中查询出前端选中的标签对象
-                user1.user_label.add(l1)
-                user1.save()
-                if user1:
-                    context['status'] = 210#全保存
-                else:
-                    context['status'] = 300#标签未保存
-            elif len(userlabel)==0:#当前没有选中标签
-                context['status']=510#没有选中标签
-            else:#如果有很多标签，循环插入标签
-                for lb in userlabel:
-                    l2 = LabelInfo.maneger.get(lb_title=lb)  #
-                    user1.user_label.add(l2)#使用add加入
-                user1.save()
-                if user1:
-                    context['status'] = 200
-                else:
-                    context['status'] = 310
+            l1 = LabelInfo.maneger.get(lb_title=userlabel)
+            user1.user_label.add(l1)
+            if user1:
+                context['status'] = 200  # 全保存
+            else:
+                context['status'] = 300  # 标签未保存
         except:
             context['status'] = 0
         return HttpResponse(JSONRenderer().render(context))
