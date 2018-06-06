@@ -28,6 +28,9 @@ urlpatterns = [
 
     path('add_ask',views.add_ask,name='add_ask'),#仅仅添加问题详情
     path('add_asklabel',views.add_asklabel,name='add_asklabel'),#添加问题的标签
+    path('delete_userlabel',views.delete_userlabel,name='delete_userlabel'),#删除用户关注的标签
+    path('delete_thereply',views.delete_thereply,name='delete_thereply'),#删除该回复
+    path('delete_theask',views.delete_theask,name='delete_theask')#删除该问题
 
 
 ]

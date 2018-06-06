@@ -414,6 +414,20 @@ def theask(request):
         return HttpResponse(content)
     return HttpResponse(JSONRenderer().render(context))
 
+#删除我关注的标签
+@api_view(['POST'])
+def delete_theask(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        asktitle = request.data.get('asktitle', )
+
+        a1 = AskInfo.maneger.filter(ask_title=asktitle)   #获取到将要取消的对象
+        a1.delete()
+        context['status'] = 200
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
 #根据该回复展示回复详情
 @api_view(['POST'])
 def thereply(request):
@@ -436,6 +450,21 @@ def thereply(request):
         content = JSONRenderer().render(serializer.data)
         return HttpResponse(content)
     return HttpResponse(JSONRenderer().render(context))
+
+#删除我关注的标签
+@api_view(['POST'])
+def delete_thereply(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        replyid = request.data.get('replyid', )
+
+        r1 = ReplyInfo.maneger.filter(id=replyid)   #获取到将要取消的对象
+        r1.delete()
+        context['status'] = 200
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
 
 #查询当前标签下的问题
 @api_view(['POST'])
@@ -481,6 +510,27 @@ def adduser_label(request):
                 context['status'] = 300  # 标签未保存
         except:
             context['status'] = 0
+        return HttpResponse(JSONRenderer().render(context))
+    return HttpResponse(JSONRenderer().render(context))
+
+#删除我关注的标签
+@api_view(['POST'])
+def delete_userlabel(request):
+    context = {'status': 400}
+    if request.method == "POST":
+        # 获取到对象，之后序列化
+        dellabel = request.data.get('dellabel')
+        username = request.data.get('username')
+
+        user1 = UserInfo.maneger.get(username=username)   #获取到将要取消的对象
+        l1 = LabelInfo.maneger.get(lb_title=dellabel)#获取到对应回复下的将要减1赞的回复对象
+        user1.user_label.remove(l1)
+        if user1:
+            #r2=ReplyInfo.maneger.filter(re_ask=user1)
+            #r2.re_user.add(reuser)
+            context['status'] = 200
+        else:
+            context['status']=500
         return HttpResponse(JSONRenderer().render(context))
     return HttpResponse(JSONRenderer().render(context))
 
